@@ -8,5 +8,5 @@
     - npm install antd
 - 学习antd的按需引入
     - 视频中antd的文档里用的是react-app-rewired和customize-cra
-    - 现在官网文档给的是craco的
-    - 因此我按照官网最新的来进行配置
+    - 现在官网文档给的是craco的--但是官网没说如何进行按需引入
+    - 因此我使用react-app-rewired和customize-cra
