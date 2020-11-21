@@ -20,16 +20,14 @@ export default class App extends Component {
   incrementIfOdd = () => {
     let { count } = this.props;
     let value = this.select.value * 1;
-    if (count % 2 == 1) {
+    if (count % 2 === 1) {
       this.props.increment(value);
     }
   };
 
   incrementAsync = () => {
     let value = this.select.value * 1;
-    setTimeout(() => {
-      this.props.increment(value);
-    }, 1000);
+    this.props.incrementAsync(value, 1000);
   };
 
   render() {

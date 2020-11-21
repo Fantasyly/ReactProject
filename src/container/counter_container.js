@@ -1,7 +1,11 @@
 /**
  * CounterUI组件的容器
  */
-import { createDecrementAction, createIncrementAction } from "../redux/action_creators";
+import {
+  createDecrementAction,
+  createIncrementAction,
+  createIncrementAsyncAction,
+} from "../redux/action_creators";
 import { connect } from "react-redux";
 import Counter from "../components/counter";
 
@@ -16,6 +20,9 @@ let mapDispatchToProps = dispatch => {
     },
     decrement: value => {
       dispatch(createDecrementAction(value));
+    },
+    incrementAsync: (value, delay) => {
+      dispatch(createIncrementAsyncAction(value, delay));
     },
   };
 };
