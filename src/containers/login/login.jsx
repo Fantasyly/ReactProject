@@ -1,12 +1,29 @@
 import React, { Component } from "react";
 import logo from "./imgs/logo.png";
-import "./css/login.less";
-import { Form, Input, Button } from "antd";
+import { reqLogin } from "../../api"; // 引入index.js时写到文件夹就可以了
+import { connect } from "react-redux";
+import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import "./css/login.less";
+import { createSaveUserInfoAction } from "../../redux/actions/login_action";
 
-export default class MyComponent extends Component {
-  onFinish = values => {
-    alert('通过ajax向服务器发请求')
+class Login extends Component {
+  onFinish = async values => {
+    let { username, password } = values;
+    // await等待发送ajax请求的成功的结果  错误的结果已经在拦截器中进行拦截了
+    let result = await reqLogin(username, password);
+
+    let { status, msg, data } = result;
+    if (status === 0) {
+      // 保存数据到redux中
+      this.props.saveUserInfo(data);
+
+      // 登录成功 跳转到admin界面
+      this.props.history.replace("/admin");
+    } else {
+      // 若登录失败
+      message.warning(msg, 1);
+    }
   };
   render() {
     return (
@@ -91,3 +108,15 @@ export default class MyComponent extends Component {
     );
   }
 }
+
+/**
+ * 把容器组件和UI组件糅杂在一块
+ * connect将状态和生成action的方法发到props中
+ */
+
+export default connect(
+  state => ({}),
+  {
+    saveUserInfo: createSaveUserInfoAction,
+  }
+)(Login);
