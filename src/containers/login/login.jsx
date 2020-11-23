@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import logo from "./imgs/logo.png";
-import { reqLogin } from "../../api"; // 引入index.js时写到文件夹就可以了
 import { connect } from "react-redux";
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import "./css/login.less";
+import {Redirect} from 'react-router-dom'
+import logo from "./imgs/logo.png";
 import { createSaveUserInfoAction } from "../../redux/actions/login_action";
+import { reqLogin } from "../../api"; // 引入index.js时写到文件夹就可以了
+import "./css/login.less";
 
 class Login extends Component {
   onFinish = async values => {
@@ -26,6 +27,9 @@ class Login extends Component {
     }
   };
   render() {
+    if (this.props.isLogin) {
+      return <Redirect to='/admin'/>
+    }
     return (
       <div className="login">
         <header>
@@ -114,9 +118,6 @@ class Login extends Component {
  * connect将状态和生成action的方法发到props中
  */
 
-export default connect(
-  state => ({}),
-  {
-    saveUserInfo: createSaveUserInfoAction,
-  }
-)(Login);
+export default connect(state => ({ isLogin: state.userInfo.isLogin }), {
+  saveUserInfo: createSaveUserInfoAction,
+})(Login);
