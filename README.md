@@ -52,5 +52,23 @@
   - 在login的action中, 在action里删除本地存储的数据, 并返回一个名为delete的type
   - 在login的reducer里,新增匹配的case
 
+## 11.24 
+- 使用装饰器语法
+- 修改打开localhost3000时的默认路由
+
+## 11.25
+- 发送Ajax请求时带着token过去
+- 搭建Admin界面 (路由)
+
+## 11.27
+- 搭建Admin界面
+  - 多个组件
+- 搭建header界面
+- 向和风天气发送请求获取天气数据
+
+## 11.28 
+- 搭建leftNav组件
+
+
 
 

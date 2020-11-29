@@ -35,6 +35,7 @@ body #root .app {
   font-size: 30px;
   color: #ecdada;
   line-height: 80px;
+  margin-bottom: 0px;
 }
 .login section {
   width: 400px;

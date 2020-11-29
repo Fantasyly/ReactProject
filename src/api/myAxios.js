@@ -6,6 +6,8 @@ import qs from "querystring";
 import { message } from "antd";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import store from "../redux/store";
+import { createDeleteUserInfoAction } from "../redux/actions/login_action";
 
 const instance = axios.create({
   timeout: 8000, // 配置超时时间 超过8s没响应 认为是连接失败
@@ -16,6 +18,14 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   // 进度条开始
   NProgress.start();
+
+  // 从store中获取token
+  const { token } = store.getState().userInfo;
+
+  // 把token放到请求头中
+  if (token) {
+    config.headers.Authorization = `atguigu_` + token;
+  }
   // 从配置对象中获取method和data
   const { method, data } = config;
 
@@ -36,7 +46,7 @@ instance.interceptors.response.use(
   response => {
     // 进度条结束
     NProgress.done();
-    //   请求如果成功 则返回真正的数据
+    // 请求如果成功 则返回真正的数据
     return response.data;
   },
 
@@ -44,7 +54,22 @@ instance.interceptors.response.use(
   error => {
     // 进度条结束
     NProgress.done();
-    message.error(error.message);
+    /**
+     * 判断一下返回的状态是不是401  如果是401说明当前的token过期了
+     * 记得判断一下error上是不是有response
+     * 因为服务器返回的是带response的
+     * 而天气接口返回的是别的错误
+     */
+    if (error.response && error.response.status === 401) {
+      message.error("身份过期,请重新登陆", 1);
+      store.dispatch(createDeleteUserInfoAction());
+    }
+
+    if (!error.response) {
+      message.error("请求天气接口失败");
+    }
+
+    //message.error(error.message);
     return new Promise(() => {});
   }
 );
