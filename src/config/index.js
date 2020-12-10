@@ -14,3 +14,6 @@ export const CITY = 101010100;
 export const KEY = "45d4d25d79494ce59f944f1fdb2335a5";
 // 和风天气接口
 export const WEATHER_URL = `https://devapi.qweather.com/v7/weather/now?location=${CITY}&key=${KEY}`;
+
+// 每页展示的条数
+export const PAGESIZE = 5;

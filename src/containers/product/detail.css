@@ -1,0 +1,15 @@
+.title {
+  font-size: 25px;
+}
+.title span {
+  margin: 0 5px;
+}
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.list-item .product-title {
+  font-size: 30px;
+  margin-right: 25px;
+}
